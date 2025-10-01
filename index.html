@@ -2,18 +2,17 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Juego de Separación de Residuos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Separacion de Residuos</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: Arial, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             padding: 15px;
             min-height: 100vh;
@@ -58,6 +57,7 @@
             color: white;
             flex: 1;
             max-width: 100px;
+            text-align: center;
         }
 
         .stat-box.time {
@@ -118,7 +118,6 @@
             font-size: 18px;
             font-weight: bold;
             color: white;
-            margin-bottom: 15px;
             min-height: 70px;
             display: flex;
             align-items: center;
@@ -149,322 +148,4 @@
         }
 
         .bin-button.organico {
-            border-color: #22c55e;
-        }
-
-        .bin-button.reciclable {
-            border-color: #3b82f6;
-        }
-
-        .bin-button.no-reciclable {
-            border-color: #ef4444;
-        }
-
-        .bin-button.selected {
-            transform: scale(1.05);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-        }
-
-        .bin-icon {
-            font-size: 40px;
-            margin-bottom: 8px;
-        }
-
-        .bin-title {
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .bin-button.organico .bin-title {
-            color: #22c55e;
-        }
-
-        .bin-button.reciclable .bin-title {
-            color: #3b82f6;
-        }
-
-        .bin-button.no-reciclable .bin-title {
-            color: #ef4444;
-        }
-
-        .bin-description {
-            font-size: 12px;
-            color: #6b7280;
-        }
-
-        .controls {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .btn {
-            flex: 1;
-            padding: 15px;
-            border: none;
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
-            color: white;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        .btn:active {
-            transform: scale(0.95);
-        }
-
-        .btn-check {
-            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
-        }
-
-        .btn-new {
-            background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
-        }
-
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .results-panel {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-            margin-bottom: 15px;
-        }
-
-        .results-title {
-            color: #4c1d95;
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        .result-item {
-            background: #f3f4f6;
-            padding: 12px;
-            margin-bottom: 8px;
-            border-radius: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 13px;
-        }
-
-        .result-item.correct {
-            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
-            border: 2px solid #10b981;
-        }
-
-        .result-item.incorrect {
-            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
-            border: 2px solid #ef4444;
-        }
-
-        .result-icon {
-            font-size: 20px;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .modal.show {
-            display: flex;
-        }
-
-        .modal-content {
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            max-width: 400px;
-            width: 100%;
-            text-align: center;
-            animation: modalSlide 0.3s ease;
-        }
-
-        @keyframes modalSlide {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .modal-icon {
-            font-size: 60px;
-            margin-bottom: 15px;
-        }
-
-        .modal-title {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            color: #4c1d95;
-        }
-
-        .modal-stats {
-            background: #f3f4f6;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 0;
-        }
-
-        .modal-stat {
-            font-size: 15px;
-            margin: 8px 0;
-            color: #374151;
-        }
-
-        .modal-message {
-            font-size: 14px;
-            color: #6b7280;
-            margin-bottom: 20px;
-        }
-
-        .info-panel {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-        }
-
-        .info-title {
-            color: #4c1d95;
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        .info-card {
-            background: #f9fafb;
-            padding: 15px;
-            border-radius: 10px;
-            border-left: 4px solid;
-            margin-bottom: 12px;
-        }
-
-        .info-card.organico {
-            border-color: #22c55e;
-        }
-
-        .info-card.reciclable {
-            border-color: #3b82f6;
-        }
-
-        .info-card.no-reciclable {
-            border-color: #ef4444;
-        }
-
-        .info-card h4 {
-            font-size: 14px;
-            margin-bottom: 8px;
-            color: #1f2937;
-        }
-
-        .info-card ul {
-            list-style: none;
-            font-size: 12px;
-            color: #6b7280;
-        }
-
-        .info-card li {
-            padding: 3px 0;
-        }
-
-        .info-card li:before {
-            content: "• ";
-            font-weight: bold;
-        }
-
-        .hidden {
-            display: none;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>🌍 Separación de Residuos</h1>
-            <p class="subtitle">Clasifica correctamente cada residuo</p>
-            <div class="stats">
-                <div class="stat-box">
-                    <div class="stat-label">Progreso</div>
-                    <div class="stat-value" id="sorted">0/15</div>
-                </div>
-                <div class="stat-box time">
-                    <div class="stat-label">Tiempo</div>
-                    <div class="stat-value" id="time">0:00</div>
-                </div>
-                <div class="stat-box errors">
-                    <div class="stat-label">Errores</div>
-                    <div class="stat-value" id="errors">0</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="instruction">
-            <p class="instruction-text">👇 Toca la caneca correcta para este residuo</p>
-        </div>
-
-        <div id="gameArea">
-            <div class="item-container">
-                <div class="item-title">📦 Residuo Actual</div>
-                <div class="current-item" id="currentItem">Cargando...</div>
-            </div>
-
-            <div class="bins-container">
-                <div class="bin-button organico" data-type="organico" onclick="selectBin('organico')">
-                    <div class="bin-icon">🍃</div>
-                    <div class="bin-title">ORGÁNICOS</div>
-                    <div class="bin-description">Residuos biodegradables</div>
-                </div>
-
-                <div class="bin-button reciclable" data-type="reciclable" onclick="selectBin('reciclable')">
-                    <div class="bin-icon">♻️</div>
-                    <div class="bin-title">RECICLABLES</div>
-                    <div class="bin-description">Papel, plástico, vidrio, metal</div>
-                </div>
-
-                <div class="bin-button no-reciclable" data-type="no-reciclable" onclick="selectBin('no-reciclable')">
-                    <div class="bin-icon">🗑️</div>
-                    <div class="bin-title">NO RECICLABLES</div>
-                    <div class="bin-description">Residuos ordinarios</div>
-                </div>
-            </div>
-        </div>
-
-        <div id="resultsArea" class="hidden">
-            <div class="results-panel">
-                <div class="results-title">📊 Resultados</div>
-                <div id="resultsList"></div>
-            </div>
-        </div>
-
-        <div class="controls">
-            <button class="btn btn-check" id="checkBtn" onclick="finishGame()">Terminar y Ver Resultados</button>
-            <button class="btn btn-new" onclick="initGame()">🎮 Nuevo Juego</button>
-        </div>
-
-        <div class="info-panel">
-            <div class="info-title">💡 Guía de Separación</div>
-            <div class="info-card organico
-            
+            border-color:

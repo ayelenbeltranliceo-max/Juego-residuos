@@ -2,150 +2,542 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Separacion de Residuos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>¡Clasifica los Residuos! 🌱</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 15px;
             min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            overflow-x: hidden;
         }
 
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
+        .game-container {
+            max-width: 500px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
         }
 
         .header {
-            background: white;
-            border-radius: 15px;
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
             padding: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-            margin-bottom: 20px;
             text-align: center;
-        }
-
-        h1 {
-            color: #4c1d95;
-            font-size: 22px;
-            margin-bottom: 8px;
-        }
-
-        .subtitle {
-            color: #6b7280;
-            font-size: 13px;
-            margin-bottom: 15px;
-        }
-
-        .stats {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-        }
-
-        .stat-box {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            padding: 10px 15px;
-            border-radius: 10px;
             color: white;
-            flex: 1;
-            max-width: 100px;
-            text-align: center;
         }
 
-        .stat-box.time {
-            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
         }
 
-        .stat-box.errors {
-            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        .score-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
         }
 
-        .stat-label {
-            font-size: 10px;
-            opacity: 0.9;
-        }
-
-        .stat-value {
-            font-size: 18px;
-            font-weight: bold;
-            margin-top: 3px;
-        }
-
-        .instruction {
-            background: white;
+        .score-item {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 15px;
             border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 15px;
-            text-align: center;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-        }
-
-        .instruction-text {
-            color: #4c1d95;
             font-size: 14px;
-            font-weight: 600;
         }
 
-        .item-container {
-            background: white;
-            border-radius: 15px;
-            padding: 15px;
-            margin-bottom: 15px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-        }
-
-        .item-title {
-            color: #4c1d95;
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 12px;
-            text-align: center;
-        }
-
-        .current-item {
-            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-            padding: 20px;
-            border-radius: 12px;
-            text-align: center;
+        .score-item strong {
             font-size: 18px;
-            font-weight: bold;
-            color: white;
-            min-height: 70px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            display: block;
         }
 
-        .bins-container {
+        .game-area {
+            padding: 20px;
+        }
+
+        .residuo-container {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 20px;
+            min-height: 180px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            margin-bottom: 15px;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        .bin-button {
+        .residuo-container::before {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            top: -100px;
+            right: -100px;
+        }
+
+        .residuo-icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .residuo-nombre {
+            font-size: 22px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .residuo-descripcion {
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+
+        .canecas-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .caneca {
             background: white;
-            border: 3px solid;
-            border-radius: 12px;
-            padding: 20px;
+            border: 3px solid #ddd;
+            border-radius: 15px;
+            padding: 20px 10px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
-        .bin-button:active {
+        .caneca:active {
             transform: scale(0.95);
         }
 
-        .bin-button.organico {
-            border-color:
+        .caneca::before {
+            content: '🗑️';
+            font-size: 50px;
+            display: block;
+            margin-bottom: 10px;
+            filter: grayscale(100%);
+            transition: filter 0.3s ease;
+        }
+
+        .caneca:hover::before {
+            filter: grayscale(0%);
+        }
+
+        .caneca-blanca {
+            border-color: #bdc3c7;
+        }
+        .caneca-blanca:hover {
+            background: #ecf0f1;
+            border-color: #95a5a6;
+            box-shadow: 0 5px 15px rgba(189, 195, 199, 0.4);
+        }
+
+        .caneca-verde {
+            border-color: #27ae60;
+        }
+        .caneca-verde:hover {
+            background: #d5f4e6;
+            border-color: #27ae60;
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.4);
+        }
+
+        .caneca-negro {
+            border-color: #2c3e50;
+        }
+        .caneca-negro:hover {
+            background: #ecf0f1;
+            border-color: #2c3e50;
+            box-shadow: 0 5px 15px rgba(44, 62, 80, 0.4);
+        }
+
+        .caneca-nombre {
+            font-weight: bold;
+            font-size: 16px;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .caneca-tipo {
+            font-size: 12px;
+            color: #7f8c8d;
+            line-height: 1.4;
+        }
+
+        .feedback {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            text-align: center;
+            z-index: 1000;
+            max-width: 300px;
+            width: 90%;
+            transition: transform 0.3s ease;
+        }
+
+        .feedback.show {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .feedback-icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+
+        .feedback-texto {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .feedback-detalle {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+
+        .btn-continuar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .btn-continuar:active {
+            transform: scale(0.95);
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        .overlay.show {
+            display: block;
+        }
+
+        .resultado-final {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            text-align: center;
+            z-index: 1000;
+            max-width: 350px;
+            width: 90%;
+            transition: transform 0.3s ease;
+        }
+
+        .resultado-final.show {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .resultado-titulo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .resultado-estadisticas {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+
+        .stat-label {
+            color: #7f8c8d;
+        }
+
+        .stat-valor {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .btn-reiniciar {
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s ease;
+        }
+
+        .btn-reiniciar:active {
+            transform: scale(0.95);
+        }
+
+        .correctas { color: #27ae60; }
+        .incorrectas { color: #e74c3c; }
+
+        @media (max-width: 400px) {
+            .header h1 {
+                font-size: 20px;
+            }
+            .residuo-icon {
+                font-size: 50px;
+            }
+            .residuo-nombre {
+                font-size: 18px;
+            }
+            .caneca::before {
+                font-size: 40px;
+            }
+            .caneca-nombre {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="header">
+            <h1>🌱 ¡Clasifica los Residuos!</h1>
+            <p>Código de colores de Colombia</p>
+            <div class="score-container">
+                <div class="score-item">
+                    <div>Correctas</div>
+                    <strong id="correctas">0</strong>
+                </div>
+                <div class="score-item">
+                    <div>Incorrectas</div>
+                    <strong id="incorrectas">0</strong>
+                </div>
+                <div class="score-item">
+                    <div>Restantes</div>
+                    <strong id="restantes">15</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="game-area">
+            <div class="residuo-container">
+                <div class="residuo-icon" id="residuo-icon">🍎</div>
+                <div class="residuo-nombre" id="residuo-nombre">Cáscara de manzana</div>
+                <div class="residuo-descripcion" id="residuo-descripcion">¿En qué caneca va?</div>
+            </div>
+
+            <div class="canecas-container">
+                <div class="caneca caneca-blanca" onclick="verificarRespuesta('blanco')">
+                    <div class="caneca-nombre">⬜ BLANCA</div>
+                    <div class="caneca-tipo">Aprovechables<br>(Reciclables)</div>
+                </div>
+                <div class="caneca caneca-verde" onclick="verificarRespuesta('verde')">
+                    <div class="caneca-nombre">🟩 VERDE</div>
+                    <div class="caneca-tipo">Orgánicos<br>(Biodegradables)</div>
+                </div>
+                <div class="caneca caneca-negro" onclick="verificarRespuesta('negro')">
+                    <div class="caneca-nombre">⬛ NEGRA</div>
+                    <div class="caneca-tipo">No aprovechables<br>(Basura)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+    <div class="feedback" id="feedback">
+        <div class="feedback-icon" id="feedback-icon">✅</div>
+        <div class="feedback-texto" id="feedback-texto">¡Correcto!</div>
+        <div class="feedback-detalle" id="feedback-detalle"></div>
+        <button class="btn-continuar" onclick="continuarJuego()">Continuar</button>
+    </div>
+
+    <div class="resultado-final" id="resultado-final">
+        <div class="resultado-titulo">🎉 ¡Juego Completado!</div>
+        <div class="resultado-estadisticas">
+            <div class="stat-item">
+                <span class="stat-label">Respuestas correctas:</span>
+                <span class="stat-valor correctas" id="final-correctas">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Respuestas incorrectas:</span>
+                <span class="stat-valor incorrectas" id="final-incorrectas">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Porcentaje de acierto:</span>
+                <span class="stat-valor" id="final-porcentaje">0%</span>
+            </div>
+        </div>
+        <button class="btn-reiniciar" onclick="reiniciarJuego()">🔄 Jugar de nuevo</button>
+    </div>
+
+    <script>
+        const residuos = [
+            // BLANCO - Aprovechables (Reciclables)
+            { nombre: "Botella de plástico", icono: "🧴", caneca: "blanco", detalle: "El plástico es reciclable" },
+            { nombre: "Periódico", icono: "📰", caneca: "blanco", detalle: "El papel y cartón son reciclables" },
+            { nombre: "Lata de aluminio", icono: "🥫", caneca: "blanco", detalle: "El aluminio es 100% reciclable" },
+            { nombre: "Caja de cartón", icono: "📦", caneca: "blanco", detalle: "El cartón es reciclable" },
+            { nombre: "Botella de vidrio", icono: "🍾", caneca: "blanco", detalle: "El vidrio es reciclable infinitamente" },
+            
+            // VERDE - Orgánicos
+            { nombre: "Cáscara de manzana", icono: "🍎", caneca: "verde", detalle: "Los restos de frutas son compostables" },
+            { nombre: "Cáscara de plátano", icono: "🍌", caneca: "verde", detalle: "Las cáscaras son materia orgánica" },
+            { nombre: "Restos de verduras", icono: "🥬", caneca: "verde", detalle: "Los vegetales son biodegradables" },
+            { nombre: "Cáscara de huevo", icono: "🥚", caneca: "verde", detalle: "Las cáscaras de huevo son compostables" },
+            { nombre: "Hojas secas", icono: "🍂", caneca: "verde", detalle: "Las hojas son materia orgánica" },
+            
+            // NEGRO - No aprovechables
+            { nombre: "Pañal usado", icono: "🧷", caneca: "negro", detalle: "Los pañales no son reciclables ni compostables" },
+            { nombre: "Papel higiénico", icono: "🧻", caneca: "negro", detalle: "El papel usado en baño no es reciclable" },
+            { nombre: "Servilleta sucia", icono: "🧽", caneca: "negro", detalle: "Las servilletas sucias no son reciclables" },
+            { nombre: "Envoltura de snacks", icono: "🍫", caneca: "negro", detalle: "Los empaques metalizados no son reciclables" },
+            { nombre: "Papel carbón", icono: "📄", caneca: "negro", detalle: "Este tipo de papel no es reciclable" }
+        ];
+
+        let residuosRestantes = [...residuos];
+        let residuoActual = null;
+        let correctas = 0;
+        let incorrectas = 0;
+
+        function mezclarArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function cargarNuevoResiduo() {
+            if (residuosRestantes.length === 0) {
+                mostrarResultadoFinal();
+                return;
+            }
+
+            residuoActual = residuosRestantes.shift();
+            document.getElementById('residuo-icon').textContent = residuoActual.icono;
+            document.getElementById('residuo-nombre').textContent = residuoActual.nombre;
+            document.getElementById('residuo-descripcion').textContent = '¿En qué caneca va?';
+            actualizarContadores();
+        }
+
+        function verificarRespuesta(canecaSeleccionada) {
+            const esCorrecta = canecaSeleccionada === residuoActual.caneca;
+            
+            if (esCorrecta) {
+                correctas++;
+                document.getElementById('feedback-icon').textContent = '✅';
+                document.getElementById('feedback-texto').textContent = '¡Correcto!';
+                document.getElementById('feedback-texto').style.color = '#27ae60';
+            } else {
+                incorrectas++;
+                document.getElementById('feedback-icon').textContent = '❌';
+                document.getElementById('feedback-texto').textContent = '¡Incorrecto!';
+                document.getElementById('feedback-texto').style.color = '#e74c3c';
+            }
+
+            const nombreCaneca = {
+                'blanco': 'BLANCA (Aprovechables)',
+                'verde': 'VERDE (Orgánicos)',
+                'negro': 'NEGRA (No aprovechables)'
+            };
+
+            document.getElementById('feedback-detalle').textContent = 
+                esCorrecta 
+                ? residuoActual.detalle 
+                : `La respuesta correcta es: ${nombreCaneca[residuoActual.caneca]}. ${residuoActual.detalle}`;
+
+            document.getElementById('overlay').classList.add('show');
+            document.getElementById('feedback').classList.add('show');
+            actualizarContadores();
+        }
+
+        function continuarJuego() {
+            document.getElementById('overlay').classList.remove('show');
+            document.getElementById('feedback').classList.remove('show');
+            cargarNuevoResiduo();
+        }
+
+        function actualizarContadores() {
+            document.getElementById('correctas').textContent = correctas;
+            document.getElementById('incorrectas').textContent = incorrectas;
+            document.getElementById('restantes').textContent = residuosRestantes.length;
+        }
+
+        function mostrarResultadoFinal() {
+            const total = correctas + incorrectas;
+            const porcentaje = Math.round((correctas / total) * 100);
+
+            document.getElementById('final-correctas').textContent = correctas;
+            document.getElementById('final-incorrectas').textContent = incorrectas;
+            document.getElementById('final-porcentaje').textContent = porcentaje + '%';
+
+            document.getElementById('overlay').classList.add('show');
+            document.getElementById('resultado-final').classList.add('show');
+        }
+
+        function reiniciarJuego() {
+            residuosRestantes = mezclarArray([...residuos]);
+            correctas = 0;
+            incorrectas = 0;
+            document.getElementById('overlay').classList.remove('show');
+            document.getElementById('resultado-final').classList.remove('show');
+            cargarNuevoResiduo();
+        }
+
+        // Inicializar el juego
+        residuosRestantes = mezclarArray([...residuos]);
+        cargarNuevoResiduo();
+    </script>
+</body>
+</html>

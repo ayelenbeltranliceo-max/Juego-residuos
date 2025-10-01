@@ -2,36 +2,78 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Juego de Separación de Residuos</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 20px;
+            padding: 15px;
             min-height: 100vh;
-            touch-action: none;
+            overflow-x: hidden;
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 600px;
             margin: 0 auto;
         }
 
         .header {
             background: white;
             border-radius: 15px;
-            padding: 25px;
+            padding: 20px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             text-align: center;
         }
 
         h1 {
-            color: #
+            color: #4c1d95;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            padding: 10px 20px;
+            border-radius: 10px;
+            color: white;
+            min-width: 90px;
+        }
+
+        .stat-box.time {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        }
+
+        .stat-box.errors {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        }
+
+        .stat-label {
+            font-size: 11px;
+            opacity: 0.9;
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight:
